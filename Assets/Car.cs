@@ -49,6 +49,14 @@ public class Car
         // TODO
     }
 
+    public void ResetPosition(Transform start)
+    {
+        model.transform.position = start.position;
+        model.transform.rotation = start.rotation;
+
+        crashed = false;
+    }
+
     private void Forward(float delta)
     {
         model.transform.position += model.transform.forward * delta;
@@ -56,12 +64,12 @@ public class Car
 
     private void Left(float delta)
     {
-        model.transform.RotateAround(model.transform.position, Vector3.up, 90 * delta);
+        model.transform.RotateAround(model.transform.position, Vector3.up, 15 * delta);
     }
 
     private void Right(float delta)
     {
-        model.transform.RotateAround(model.transform.position, Vector3.up, -90 * delta);
+        model.transform.RotateAround(model.transform.position, Vector3.up, -15 * delta);
     }
 
     public bool HasHitTrack(List<Collider> walls)

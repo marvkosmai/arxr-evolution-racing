@@ -6,8 +6,8 @@ public class EvolutionRace : MonoBehaviour
 {
     public int nCars;
 
-    [Range(1, 10)]
-    public float speed = 1;
+    [Range(1, 20)]
+    public float speed = 10;
 
     private List<Car> cars;
 
@@ -43,7 +43,7 @@ public class EvolutionRace : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (inSimulation)
         {
@@ -74,9 +74,11 @@ public class EvolutionRace : MonoBehaviour
     {
         CalcFitness();
         SortPopulation();
-        NewPopulation();
+        NewMoves();
+        ResetCars();
 
         inSimulation = true;
+        stepCounter = 1;
     }
 
     private void CalcFitness()
@@ -93,8 +95,16 @@ public class EvolutionRace : MonoBehaviour
         // TODO
     }
 
-    private void NewPopulation()
+    private void NewMoves()
     {
         // TODO
+    }
+
+    private void ResetCars()
+    {
+        foreach (Car car in cars)
+        {
+            car.ResetPosition(transform);
+        }
     }
 }
