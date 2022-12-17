@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Track
+  - UI_Text_SimSpeed
   layers:
   - Default
   - TransparentFX
