@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Track
   - UI_Text_SimSpeed
+  - Center
   layers:
   - Default
   - TransparentFX

@@ -6,15 +6,23 @@ public class EvolutionRace : MonoBehaviour
 {
     public int nCars;
 
-    [Range(1, 20)]
+    [Range(1, 30)]
     public float speed = 10;
+
+    [Range(0f, 1f)]
+    public float elitsPercent = 0.2f;
+
+    [Range(0f, 1f)]
+    public float mutationRate = 0.1f;
 
     private List<Car> cars;
 
     private bool inSimulation;
     private int stepCounter;
 
-    List<Collider> walls;
+    private List<Collider> walls;
+
+    private GameObject center;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +38,8 @@ public class EvolutionRace : MonoBehaviour
         stepCounter = 1;
 
         InitWalls();
+
+        center = GameObject.FindGameObjectWithTag("Center");
     }
 
     private void InitWalls()
@@ -86,18 +96,86 @@ public class EvolutionRace : MonoBehaviour
         // TODO
         foreach (Car car in cars)
         {
-            car.CalcFitness();
+            car.CalcFitness(center, transform.gameObject);
         }
     }
 
     private void SortPopulation()
     {
         // TODO
+        cars.Sort((Car a, Car b) => b.fitness.CompareTo(a.fitness));
     }
 
     private void NewMoves()
     {
         // TODO
+        List<List<Move>> newPopulation = new List<List<Move>>();
+
+        int elits = (int) (nCars * elitsPercent);
+        for (int i = 0; i < elits; i++)
+        {
+            newPopulation.Add(cars[i].moves);
+        }  
+
+        for (int i = elits; i < nCars; i++)
+        {
+            newPopulation.Add(Mutate(ChildMoveset()));
+        }
+
+        for (int i = 0; i < nCars; i++)
+        {
+            cars[i].SetMoves(newPopulation[i]);
+        }
+    }
+
+    private List<Move> ChildMoveset()
+    {
+        return CombineMoves(TournamentParent(), TournamentParent());
+    }
+
+    private List<Move> Mutate(List<Move> moveset)
+    {
+        if (mutationRate < Random.Range(0f, 1f))
+        {
+            return moveset;
+        }
+
+        moveset[Random.Range(0, moveset.Count)] = Car.RandomMove();
+
+        return moveset;
+    }
+
+    private Car TournamentParent()
+    {
+        Car p1 = cars[Random.Range(0, cars.Count)];
+        Car p2 = cars[Random.Range(0, cars.Count)];
+
+        return p1.fitness > p2.fitness ? p1 : p2;
+    }
+
+    private List<Move> CombineMoves(Car p1, Car p2)
+    {
+        List<Move> newMoves = new List<Move>();
+
+        int minCount = Mathf.Min(p1.moves.Count, p2.moves.Count);
+        int maxCount = Mathf.Max(p1.moves.Count, p2.moves.Count);
+
+        int point = Random.Range(0, minCount);
+
+        bool switchParent = p1.moves.Count > p2.moves.Count;
+
+        for (int i = 0; i < maxCount; i++)
+        {
+            if (i < point)
+            {
+                newMoves.Add(!switchParent ? p1.moves[i] : p2.moves[i]);
+            } else
+            {
+                newMoves.Add(switchParent ? p1.moves[i] : p2.moves[i]);
+            }
+        }
+
+        return newMoves;
     }
 
     private void ResetCars()

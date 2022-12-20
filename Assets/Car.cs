@@ -6,7 +6,7 @@ public class Car
 {
     public List<Move> moves;
 
-    private int fitness;
+    public float fitness;
 
     private GameObject model;
 
@@ -44,9 +44,23 @@ public class Car
         }
     }
 
-    public void CalcFitness()
+    public void CalcFitness(GameObject center, GameObject start)
     {
         // TODO
+        fitness = AngleAroundCenter(center, start);
+    }
+
+    private float AngleAroundCenter(GameObject center, GameObject start)
+    {
+        Vector3 from = start.transform.position - center.transform.position;
+        Vector3 to = model.transform.position - center.transform.position;
+
+        float angle = Vector3.Angle(from, to);
+        float sign = Mathf.Sign(Vector3.Dot(center.transform.up, Vector3.Cross(from, to)));
+        if (sign < 0) {
+            angle = 360 - angle;
+        }
+        return angle;
     }
 
     public void ResetPosition(Transform start)
@@ -88,7 +102,7 @@ public class Car
         return crashed;
     }
 
-    private Move RandomMove()
+    public static Move RandomMove()
     {
         int move = Random.Range(0, 3);
         switch (move)
@@ -99,5 +113,10 @@ public class Car
         }
 
         return Move.FORWRD;
+    }
+
+    public void SetMoves(List<Move> moves)
+    {
+        this.moves = moves;
     }
 }
