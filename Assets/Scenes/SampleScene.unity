@@ -188,7 +188,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &41035552
 GameObject:
@@ -413,10 +413,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64557d6f398954c44b1b3cea774d3011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nCars: 100
-  speed: 30
-  elitsPercent: 0.5
-  mutationRate: 0.7
+  nCars: 200
+  speed: 10
+  elitsPercent: 0.2
+  mutationRate: 0.05
 --- !u!4 &175631065
 Transform:
   m_ObjectHideFlags: 0
@@ -1827,7 +1827,7 @@ RectTransform:
   - {fileID: 317225576}
   - {fileID: 1683598672}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2071,7 +2071,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2146966290}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -2, y: 0, z: -0}
+  m_LocalPosition: {x: -10, y: 0, z: 0}
   m_LocalScale: {x: 20, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

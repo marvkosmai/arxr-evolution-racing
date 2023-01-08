@@ -19,7 +19,7 @@ public class Car
         fitness = 0;
 
         model = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        model.transform.position = start.position;
+        model.transform.position = start.position + start.forward * 2;
         model.transform.rotation = start.rotation;
 
         model.name = "Car " + model.GetInstanceID();
@@ -65,8 +65,10 @@ public class Car
 
     public void ResetPosition(Transform start)
     {
-        model.transform.position = start.position;
+        model.transform.position = start.position + start.forward * 2;
         model.transform.rotation = start.rotation;
+
+        model.GetComponent<Renderer>().material.color = Color.white;
 
         crashed = false;
     }
@@ -79,11 +81,13 @@ public class Car
     private void Left(float delta)
     {
         model.transform.RotateAround(model.transform.position, Vector3.up, 15 * delta);
+        Forward(delta);
     }
 
     private void Right(float delta)
     {
         model.transform.RotateAround(model.transform.position, Vector3.up, -15 * delta);
+        Forward(delta);
     }
 
     public bool HasHitTrack(List<Collider> walls)
@@ -95,6 +99,7 @@ public class Car
             if (model.GetComponent<Collider>().bounds.Intersects(wall.bounds))
             {
                 crashed = true;
+                model.GetComponent<Renderer>().material.color = Color.red;
                 return true;
             }
         }

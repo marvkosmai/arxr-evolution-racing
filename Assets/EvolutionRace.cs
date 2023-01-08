@@ -93,7 +93,6 @@ public class EvolutionRace : MonoBehaviour
 
     private void CalcFitness()
     {
-        // TODO
         foreach (Car car in cars)
         {
             car.CalcFitness(center, transform.gameObject);
@@ -102,13 +101,11 @@ public class EvolutionRace : MonoBehaviour
 
     private void SortPopulation()
     {
-        // TODO
         cars.Sort((Car a, Car b) => b.fitness.CompareTo(a.fitness));
     }
 
     private void NewMoves()
     {
-        // TODO
         List<List<Move>> newPopulation = new List<List<Move>>();
 
         int elits = (int) (nCars * elitsPercent);
@@ -135,12 +132,12 @@ public class EvolutionRace : MonoBehaviour
 
     private List<Move> Mutate(List<Move> moveset)
     {
-        if (mutationRate < Random.Range(0f, 1f))
+        for (int i = 0; i < moveset.Count; i++)
         {
-            return moveset;
-        }
+            if (mutationRate < Random.Range(0f, 1f)) continue;
 
-        moveset[Random.Range(0, moveset.Count)] = Car.RandomMove();
+            moveset[i] = Car.RandomMove();
+        }
 
         return moveset;
     }
