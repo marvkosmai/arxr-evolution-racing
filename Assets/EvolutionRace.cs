@@ -20,6 +20,8 @@ public class EvolutionRace : MonoBehaviour
     private bool inSimulation;
     private int stepCounter;
 
+    public int population;
+
     private List<Collider> walls;
 
     private GameObject center;
@@ -36,6 +38,8 @@ public class EvolutionRace : MonoBehaviour
 
         inSimulation = true;
         stepCounter = 1;
+
+        population = 1;
 
         InitWalls();
 
@@ -89,6 +93,7 @@ public class EvolutionRace : MonoBehaviour
 
         inSimulation = true;
         stepCounter = 1;
+        population++;
     }
 
     private void CalcFitness()

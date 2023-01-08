@@ -415,7 +415,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nCars: 200
   speed: 10
-  elitsPercent: 0.2
+  elitsPercent: 0.1
   mutationRate: 0.05
 --- !u!4 &175631065
 Transform:

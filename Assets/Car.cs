@@ -19,7 +19,7 @@ public class Car
         fitness = 0;
 
         model = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        model.transform.position = start.position + start.forward * 2;
+        model.transform.position = start.position;
         model.transform.rotation = start.rotation;
 
         model.name = "Car " + model.GetInstanceID();
