@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class EvolutionRace : MonoBehaviour
@@ -25,6 +27,9 @@ public class EvolutionRace : MonoBehaviour
     private List<Collider> walls;
 
     private GameObject center;
+
+    public GameObject txt_val_Iteration;
+    private int iteration = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -67,21 +72,34 @@ public class EvolutionRace : MonoBehaviour
         if (!inSimulation)
         {
             Evolution();
+            txt_val_Iteration.GetComponent<TextMeshProUGUI>().text = ++iteration + "";
         }
+
     }
 
     private void Simulate()
     {
         inSimulation = false;
 
+        var maxFitnessCar = cars[0];
         foreach (Car car in cars)
         {
-            if (car.HasHitTrack(walls)) continue;
+            if (car.HasHitTrack(walls) != Car.CrashType.notCrashed) continue;
             inSimulation = true;
 
             car.TakeStep(stepCounter, Time.deltaTime * speed);
+            car.CalcFitness(center, transform.gameObject);
+            car.model.GetComponent<Renderer>().material.color = Color.white;
+
+            if (car.fitness > maxFitnessCar.fitness){
+                maxFitnessCar = car;
+            }
         }
+        maxFitnessCar.model.GetComponent<Renderer>().material.color = Color.green;
         stepCounter++;
+
+        if(!inSimulation && cars.Any(x => x.crashed == Car.CrashType.crashedRaceTarget))
+            inSimulation = true;
     }
 
     private void Evolution()

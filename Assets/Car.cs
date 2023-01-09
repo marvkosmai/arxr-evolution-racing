@@ -8,9 +8,16 @@ public class Car
 
     public float fitness;
 
-    private GameObject model;
+    public GameObject model;
 
-    private bool crashed;
+    public CrashType crashed;
+
+    public enum CrashType
+    {
+        notCrashed,
+        crashed,
+        crashedRaceTarget
+    }
 
     public Car(Transform start)
     {
@@ -24,7 +31,7 @@ public class Car
 
         model.name = "Car " + model.GetInstanceID();
 
-        crashed = false;
+        crashed = CrashType.notCrashed;
     }
 
     public void TakeStep(int step, float delta)
@@ -57,7 +64,8 @@ public class Car
 
         float angle = Vector3.Angle(from, to);
         float sign = Mathf.Sign(Vector3.Dot(center.transform.up, Vector3.Cross(from, to)));
-        if (sign < 0) {
+        if (sign < 0)
+        {
             angle = 360 - angle;
         }
         return angle;
@@ -70,7 +78,7 @@ public class Car
 
         model.GetComponent<Renderer>().material.color = Color.white;
 
-        crashed = false;
+        crashed = CrashType.notCrashed;
     }
 
     private void Forward(float delta)
@@ -90,17 +98,25 @@ public class Car
         Forward(delta);
     }
 
-    public bool HasHitTrack(List<Collider> walls)
+    public CrashType HasHitTrack(List<Collider> walls)
     {
-        if (crashed) return true;
+        if (crashed != Car.CrashType.notCrashed) return crashed;
 
         foreach (Collider wall in walls)
         {
             if (model.GetComponent<Collider>().bounds.Intersects(wall.bounds))
             {
-                crashed = true;
-                model.GetComponent<Renderer>().material.color = Color.red;
-                return true;
+                if (wall.name == "RaceEnd")
+                {
+                    crashed = CrashType.crashedRaceTarget;
+                    model.GetComponent<Renderer>().material.color = Color.blue;
+                }
+                else
+                {
+                    crashed = CrashType.crashed;
+                    model.GetComponent<Renderer>().material.color = Color.red;
+                }
+                return crashed;
             }
         }
 
