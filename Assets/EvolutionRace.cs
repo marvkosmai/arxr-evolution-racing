@@ -155,9 +155,11 @@ public class EvolutionRace : MonoBehaviour
 
     private List<Move> Mutate(List<Move> moveset)
     {
+        float ageFactor = 0.1f;
         for (int i = 0; i < moveset.Count; i++)
         {
-            if (mutationRate < Random.Range(0f, 1f)) continue;
+            float ageBasedProb = 1f - (i * ageFactor / moveset.Count);
+            if (mutationRate * ageBasedProb < Random.Range(0f, 1f)) continue;
 
             moveset[i] = Car.RandomMove();
         }

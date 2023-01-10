@@ -418,6 +418,7 @@ MonoBehaviour:
   elitsPercent: 0.1
   mutationRate: 0.05
   population: 0
+  txt_val_Iteration: {fileID: 1132729810}
 --- !u!4 &175631065
 Transform:
   m_ObjectHideFlags: 0
@@ -1254,7 +1255,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -340, y: -205}
+  m_AnchoredPosition: {x: -320, y: -205}
   m_SizeDelta: {x: 160, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1132729812
@@ -1633,7 +1634,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -340, y: -225}
+  m_AnchoredPosition: {x: -320, y: -225}
   m_SizeDelta: {x: 160, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1683598673
