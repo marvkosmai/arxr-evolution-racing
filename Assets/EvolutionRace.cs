@@ -29,6 +29,7 @@ public class EvolutionRace : MonoBehaviour
     private GameObject center;
 
     public GameObject txt_val_Iteration;
+    TextMeshProUGUI iteration_gui;
     private int iteration = 1;
 
     // Start is called before the first frame update
@@ -49,6 +50,8 @@ public class EvolutionRace : MonoBehaviour
         InitWalls();
 
         center = GameObject.FindGameObjectWithTag("Center");
+
+        iteration_gui = txt_val_Iteration.GetComponent<TextMeshProUGUI>();
     }
 
     private void InitWalls()
@@ -72,7 +75,7 @@ public class EvolutionRace : MonoBehaviour
         if (!inSimulation)
         {
             Evolution();
-            txt_val_Iteration.GetComponent<TextMeshProUGUI>().text = ++iteration + "";
+            iteration_gui.text = ++iteration + "";
         }
 
     }
@@ -89,13 +92,13 @@ public class EvolutionRace : MonoBehaviour
 
             car.TakeStep(stepCounter, Time.deltaTime * speed);
             car.CalcFitness(center, transform.gameObject);
-            car.model.GetComponent<Renderer>().material.color = Color.white;
+            car.renderer.material.color = Color.white;
 
             if (car.fitness > maxFitnessCar.fitness){
                 maxFitnessCar = car;
             }
         }
-        maxFitnessCar.model.GetComponent<Renderer>().material.color = Color.green;
+        maxFitnessCar.renderer.material.color = Color.green;
         stepCounter++;
 
         if(!inSimulation && cars.Any(x => x.crashed == Car.CrashType.crashedRaceTarget))

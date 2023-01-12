@@ -12,6 +12,10 @@ public class Car
 
     public CrashType crashed;
 
+    public Renderer renderer;
+
+    public Collider collider;
+
     public enum CrashType
     {
         notCrashed,
@@ -30,6 +34,9 @@ public class Car
         model.transform.rotation = start.rotation;
 
         model.name = "Car " + model.GetInstanceID();
+
+        renderer = model.GetComponent<Renderer>();
+        collider = model.GetComponent<Collider>();
 
         crashed = CrashType.notCrashed;
     }
@@ -76,7 +83,7 @@ public class Car
         model.transform.position = start.position + start.forward * 2;
         model.transform.rotation = start.rotation;
 
-        model.GetComponent<Renderer>().material.color = Color.white;
+        renderer.material.color = Color.white;
 
         crashed = CrashType.notCrashed;
     }
@@ -104,17 +111,17 @@ public class Car
 
         foreach (Collider wall in walls)
         {
-            if (model.GetComponent<Collider>().bounds.Intersects(wall.bounds))
+            if (collider.bounds.Intersects(wall.bounds))
             {
                 if (wall.name == "RaceEnd")
                 {
                     crashed = CrashType.crashedRaceTarget;
-                    model.GetComponent<Renderer>().material.color = Color.blue;
+                    renderer.material.color = Color.blue;
                 }
                 else
                 {
                     crashed = CrashType.crashed;
-                    model.GetComponent<Renderer>().material.color = Color.red;
+                    renderer.material.color = Color.red;
                 }
                 return crashed;
             }
